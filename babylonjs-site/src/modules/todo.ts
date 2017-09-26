@@ -99,7 +99,7 @@ export const actionCreators = {
 export type ToDoProps = ToDoState & typeof actionCreators;
 
 const initialState: ToDoState = {list:[<Todo> {
-    text: 'Use Redux with TypeScript',
+    text: 'Hook up to Azure functions',
     completed: false,
     id: 0
 }]};

@@ -1,33 +1,32 @@
 import * as React from 'react';
 import { ApplicationState } from '../../store';
 import { ToDoProps, actionCreators } from '../../modules/todo';
-import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+// import * as classNames from 'classnames';
+
+import MainSection from './MainSection';
+import Header from './Header';
+import 'todomvc-app-css/index.css'
 
 class ToDo extends React.Component<ToDoProps, {}> {
   constructor(props: ToDoProps) {
-    super(props)
-
-    console.log('props', props)
+    super(props);
   }
 
   public render() {
-    console.log('current props:', this.props)
+    const { list, clearCompleted, completeAll, editToDo, completeToDo, deleteToDo, addToDo } = this.props
     return (
-      <div>
-        {
-          this.props.list.map(todo => (
-            <div className="row" key={todo.id}>
-              <div className="col-xs-6">
-                {todo.text}
-              </div>
-              <div className="col-xs-3">{todo.completed ? 'completed' : 'not completed'}</div>
-              <div className="col-xs-3">
-                <Button onClick={() => this.props.completeToDo(todo.id)}>toggle</Button>
-              </div>
-            </div>
-          ))
-        }
+      <div className="todoapp">        
+        <Header addTodo={addToDo} />
+
+        <MainSection
+          todos={list}
+          clearCompleted={clearCompleted}
+          completeAll={completeAll}
+          editTodo={editToDo}
+          completeTodo={completeToDo}
+          deleteTodo={deleteToDo}
+        />
       </div>
     )
   }

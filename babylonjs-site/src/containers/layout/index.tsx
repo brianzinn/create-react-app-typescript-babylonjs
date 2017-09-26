@@ -4,9 +4,9 @@ import { NavLink, Link } from 'react-router-dom';
 export default class Layout extends React.Component<{}, {}> {
     public render() {
         return (
-            <div className="container-fluid">
+            <div className="container">
                 <div className="row">
-                    <div className="col-sm-3">
+                    <div className="col-sm-3 col-lg-3">
                         <div className="main-nav">
                             <div className="navbar navbar-inverse">
                                 <div className="navbar-header">
@@ -41,7 +41,7 @@ export default class Layout extends React.Component<{}, {}> {
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-9">
+                    <div className="col-sm-9 col-lg-9">
                         {this.props.children}
                     </div>
                 </div>

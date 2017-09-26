@@ -1,31 +1,39 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Panel, Well } from 'react-bootstrap';
-import {
-    Scene, MeshBuilder, Vector3, Color3, ArcRotateCamera, HemisphericLight, DirectionalLight, Mesh, StandardMaterial,
-    ShadowGenerator, VolumetricLightScatteringPostProcess, Texture
-} from 'babylonjs';
+import * as BABYLON from 'babylonjs';
+import * as GUI from 'babylonjs-gui'
+
 import { Scene as ReactBabylonJsScene, SceneEventArgs } from 'react-babylonjs';
+
+import * as CANNON from 'cannon'
+window.CANNON = CANNON
 
 export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
 
-    private scene: Scene;
+    private scene: BABYLON.Scene;
 
     onSceneMount = (e: SceneEventArgs) => {
         const { canvas, scene, engine } = e;
                 
         this.scene = scene;
 
-        let light = new HemisphericLight('hemi', new Vector3(0, -1, 0), scene);
+        const gravityVector = new BABYLON.Vector3(0, -9.81, 0);
+        
+        // update /Views/Shared/_Layout.cshtml to include JS for engine of choice.
+        //this.scene.enablePhysics(gravityVector, new OimoJSPlugin())
+        this.scene.enablePhysics(gravityVector, new BABYLON.CannonJSPlugin())
+        
+        let light = new BABYLON.HemisphericLight('hemi', new BABYLON.Vector3(0, -1, 0), scene);
         light.intensity = 0.8;
 
-        let shadowLight = new DirectionalLight('dir01', new Vector3(1, -0.75, 1), scene);
-        shadowLight.position = new Vector3(-40, 30, -40);
+        let shadowLight = new BABYLON.DirectionalLight('dir01', new BABYLON.Vector3(1, -0.75, 1), scene);
+        shadowLight.position = new BABYLON.Vector3(-40, 30, -40);
         shadowLight.intensity = 0.4;
         shadowLight.shadowMinZ = 1;
         shadowLight.shadowMaxZ = 2500;
         
-        var camera = new ArcRotateCamera('Camera', 0, Math.PI / 4, 20, Vector3.Zero(), scene);
+        var camera = new BABYLON.ArcRotateCamera('Camera', Math.PI / -2, Math.PI / 4, 16, BABYLON.Vector3.Zero(), scene);
         // camera.lowerAlphaLimit = -0.0001;
         // camera.upperAlphaLimit = 0.0001;
         camera.lowerRadiusLimit = 8; // zoom right into logo
@@ -33,7 +41,7 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
         camera.upperBetaLimit = Math.PI / 2;
         camera.attachControl(canvas);
 
-        let shadowGenerator = new ShadowGenerator(1024 /* size of shadow map */, shadowLight);
+        let shadowGenerator = new BABYLON.ShadowGenerator(1024 /* size of shadow map */, shadowLight);
         shadowGenerator.bias = 0.001;
         shadowGenerator.depthScale = 2500;
 
@@ -42,17 +50,11 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
         shadowGenerator.forceBackFacesOnly = true;
         shadowGenerator.depthScale = 100;
 
-        const boxDimension = 2;
-        let box =  MeshBuilder.CreateBox('home-logo', { size: boxDimension }, scene);
-        box.position.y = 3;
-        shadowGenerator.getShadowMap().renderList.push(box);
+        var floor = BABYLON.MeshBuilder.CreateBox('ground', { width: 10, height: 1, depth: 10 }, scene);
 
-        var floor = MeshBuilder.CreateBox('ground', { width: 100, height: 1, depth: 100 }, scene);
-
-        var darkMaterial = new StandardMaterial('Grey', scene);
-        darkMaterial.diffuseColor = Color3.FromInts(255, 255, 255); // Color3.FromInts(200, 200, 200)
+        var darkMaterial = new BABYLON.StandardMaterial('Grey', scene);
+        darkMaterial.diffuseColor = BABYLON.Color3.FromInts(255, 255, 255); // Color3.FromInts(200, 200, 200)
         floor.material = darkMaterial;
-        floor.position.y -= 1;
         floor.receiveShadows = true;
 
         const radiansFromCameraForShadows = -3 * (Math.PI / 4);
@@ -60,33 +62,35 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
         scene.registerBeforeRender(() => {
             shadowLight.position.x = Math.cos(camera.alpha + radiansFromCameraForShadows) * 40;
             shadowLight.position.z = Math.sin(camera.alpha + radiansFromCameraForShadows) * 40;
-            shadowLight.setDirectionToTarget(Vector3.Zero());
+            shadowLight.setDirectionToTarget(BABYLON.Vector3.Zero());
         });
 
-        var godrayMesh = Mesh.CreateSphere('gr-mesh', 10, boxDimension, scene, false);
-        godrayMesh.parent = box;
-        godrayMesh.position.x -= (boxDimension / 2);
-        godrayMesh.position.y += boxDimension;
+        var sphere = BABYLON.Mesh.CreateSphere('sphere', 10, 2, scene, false);
+        sphere.position.y = 5
         
-        var grMat = new StandardMaterial('gr-mat', scene);
-        grMat.wireframe = true;
-        grMat.backFaceCulling = false;
-        grMat.diffuseColor = new Color3(1, 1, 0);
-        grMat.emissiveColor = new Color3(.5, .5, 0);
-        godrayMesh.material = grMat;
-
-        var godrays = new VolumetricLightScatteringPostProcess(
-            'godrays', 1.0, camera, godrayMesh, 100, Texture.BILINEAR_SAMPLINGMODE, engine, false
-        );
-
-        // no particles in this demo, so we leave this false
-        if (godrays['_volumetricLightScatteringRTT']) {
-            godrays['_volumetricLightScatteringRTT'].renderParticles = true;
-        }
-
-        // some advanced godrays settings for you to play-with
-        godrays.exposure = 0.35;
+        shadowGenerator.getShadowMap().renderList.push(sphere);
         
+        sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
+        floor.physicsImpostor = new BABYLON.PhysicsImpostor(floor, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
+
+        // GUI
+        var plane = BABYLON.MeshBuilder.CreatePlane("plane", {size: 2}, scene);
+        plane.parent = sphere;
+        plane.position.y = 2;
+
+        var advancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+
+        var button1 = GUI.Button.CreateSimpleButton("but1", "Click Me");
+        button1.width = 1;
+        button1.height = 0.4;
+        button1.color = "white";
+        button1.fontSize = 200;
+        button1.background = "green";
+        button1.onPointerUpObservable.add(function() {
+            sphere.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 10, 0), sphere.getAbsolutePosition());
+        });
+        advancedTexture.addControl(button1); 
+    
         engine.runRenderLoop(() => {
             if (scene) {
                 scene.render();
@@ -99,8 +103,8 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
             <div style={{ paddingTop: '15px' }}>
                 <div className="row">
                     <div className="col-xs-12">
-                        <Panel header={<div><strong>Home</strong> spinning box...</div>} bsStyle="success">
-                            <p><strong>testing</strong> testing :)</p>
+                        <Panel header={<div>bouncy <strong>BabylonJS</strong> sphere...</div>} bsStyle="success">
+                            <p><strong>click</strong> label to bounce sphere - all ES6, yay!</p>
                         </Panel>
                     </div>
                 </div>
@@ -111,7 +115,7 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                         visible={true}
                         shadersRepository={'/shaders/'}
                         width={600}
-                        height={200}
+                        height={400}
                     />
                 </Well>
             </div>
