@@ -1,8 +1,10 @@
 Lots of projects are being discontinued in favour of Create React App.  ie:
-https://github.com/davezuko/react-redux-starter-kit (10K stars)
-https://github.com/rangle/typescript-react-redux-example
+<ul>
+<li>https://github.com/davezuko/react-redux-starter-kit (10K stars)</li>
+<li>https://github.com/rangle/typescript-react-redux-example</li>
+</ul>
 
-So, wanted to create a BabylonJS starter kit with redux-saga to provide a possible starting point for anybody interested.  I wanted this starter to be Typescript, so used react-scripts-ts:
+So, wanted to create a BabylonJS starter kit with React + Redux (saga) to provide a possible starting point for anybody interested.  I wanted this starter to be Typescript, so used react-scripts-ts:
 
 ```csh
 npm install -g create-react-app
@@ -19,12 +21,15 @@ or
 npm install
 ```
 
-This project has added babylonjs-react (NPM) and redux.
+This project has not been 'ejected', so that decision has not already been made for you!
 
-What I intend to add/fix soon:
+This project uses babylonjs-react [NPM](https://www.npmjs.com/package/react-babylonjs), but not linked to 'redux-saga' yet.  Additionally, GUI and Physics Engine have been ES6 imported, which is new in BabylonJS 3.1.0-alpha3.4+ :)
+
+What I intend to add/fix:
 <ol>
-<li>fix the TODO with basic functionality.</li>
-<li>fix babylonJS scene for home page to use babylonjs-react middleware - possibly new VR helper!</li>
+<li>fix babylonJS scene to use babylonjs-react middleware via saga</li>
+<li>add new VR helper</li>
 <li>add proper HMR - seems to refresh entire page</li>
 <li>add gh-pages</li>
+<li>connect ToDo to Azure function and BabylonJS</li>
 </ol>
