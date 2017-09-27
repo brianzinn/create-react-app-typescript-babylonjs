@@ -11,8 +11,14 @@ export interface ApplicationState {
   todo: ToDoState
 }
 
-// actual store setup
-export const history = createHistory();
+const BROWSER_HISTORY_BUILD_OPTIONS = (process.env.NODE_ENV === 'development')
+  ? undefined
+  : { basename: '/create-react-app-typescript-babylonjs'}
+
+// actual store setup.
+// NOTE: this basename is only being used because of gh-pages.  If you clone this repo and are deploying to root directory, just use:
+// export const history = createHistory();
+export const history = createHistory(BROWSER_HISTORY_BUILD_OPTIONS);
 
 const initialState = {};
 const enhancers = [];
