@@ -1,6 +1,6 @@
 Lots of projects are being discontinued in favour of Create React App.  ie:
 <ul>
-<li>https://github.com/davezuko/react-redux-starter-kit (10K stars)</li>
+<li>https://github.com/davezuko/react-redux-starter-kit (~10K ★'s)</li>
 <li>https://github.com/rangle/typescript-react-redux-example</li>
 </ul>
 
@@ -30,6 +30,7 @@ What I intend to add/fix:
 <li>fix babylonJS scene to use babylonjs-react middleware via saga</li>
 <li>add new VR helper</li>
 <li>add proper HMR - seems to refresh entire page</li>
-<li>add gh-pages</li>
-<li>connect ToDo to Azure function and BabylonJS</li>
+<li>connect ToDo to Azure functions (and possibly even BabylonJS).</li>
 </ol>
+
+View result: [demo site on gh-pages](https://brianzinn.github.io/create-react-app-typescript-babylonjs/)
