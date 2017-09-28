@@ -1,24 +1,26 @@
 import { createStore, applyMiddleware, compose, GenericStoreEnhancer } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
+import { BrowserHistoryBuildOptions } from 'history'
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../modules';
 
 import { ToDoState } from '../modules/todo'
 
-// application state
+// application-wide state: see /todo/index -> connect(...)
 export interface ApplicationState {
   todo: ToDoState
 }
 
-const BROWSER_HISTORY_BUILD_OPTIONS = (process.env.NODE_ENV === 'development')
-  ? undefined
-  : { basename: '/create-react-app-typescript-babylonjs'}
+const getBrowserHistoryBuildOptions = (): BrowserHistoryBuildOptions | undefined => {
+  return process.env.NODE_ENV === 'development'
+    ? undefined
+    : { basename: '/create-react-app-typescript-babylonjs'}
+}
 
-// actual store setup.
-// NOTE: this basename is only being used because of gh-pages.  If you clone this repo and are deploying to root directory, just use:
+// NOTE: getBrowserHistoryBuildOptions() is only used for gh-pages.  If you clone this repo and are deploying to root directory, just use:
 // export const history = createHistory();
-export const history = createHistory(BROWSER_HISTORY_BUILD_OPTIONS);
+export const history = createHistory(getBrowserHistoryBuildOptions());
 
 const initialState = {};
 const enhancers = [];
