@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Panel, Well } from 'react-bootstrap';
-import { Scene as BabylonScene, Vector3, HemisphericLight, DirectionalLight, CannonJSPlugin, ArcRotateCamera, MeshBuilder, ShadowGenerator,
-    StandardMaterial, PhysicsImpostor, Mesh, Color3 } from 'babylonjs';
-import { AdvancedDynamicTexture, Button } from 'babylonjs-gui'
+import { Container, Row, Col } from 'reactstrap';
+import { Scene as BabylonScene, Vector3, HemisphericLight, DirectionalLight, CannonJSPlugin, ArcRotateCamera,
+    MeshBuilder, ShadowGenerator, StandardMaterial, PhysicsImpostor, Mesh, Color3 } from 'babylonjs';
+import { AdvancedDynamicTexture, Button } from 'babylonjs-gui';
 
 import { Scene as ReactBabylonJsScene, SceneEventArgs } from 'react-babylonjs';
 
-import * as CANNON from 'cannon'
-window.CANNON = CANNON
+import * as CANNON from 'cannon';
+window.CANNON = CANNON;
 
 export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
 
@@ -22,8 +22,8 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
         const gravityVector = new Vector3(0, -9.81, 0);
         
         // update /Views/Shared/_Layout.cshtml to include JS for engine of choice.
-        //this.scene.enablePhysics(gravityVector, new OimoJSPlugin())
-        this.scene.enablePhysics(gravityVector, new CannonJSPlugin())
+        // this.scene.enablePhysics(gravityVector, new OimoJSPlugin())
+        this.scene.enablePhysics(gravityVector, new CannonJSPlugin());
         
         let light = new HemisphericLight('hemi', new Vector3(0, -1, 0), scene);
         light.intensity = 0.8;
@@ -67,28 +67,46 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
         });
 
         var sphere = Mesh.CreateSphere('sphere', 10, 2, scene, false);
-        sphere.position.y = 5
+        sphere.position.y = 5;
         
         shadowGenerator.getShadowMap()!.renderList!.push(sphere);
         
-        sphere.physicsImpostor = new PhysicsImpostor(sphere, PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
-        floor.physicsImpostor = new PhysicsImpostor(floor, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
+        sphere.physicsImpostor = new PhysicsImpostor(
+            sphere,
+            PhysicsImpostor.SphereImpostor,
+            {
+                mass: 1,
+                restitution: 0.9
+            },
+            scene
+        );
+        floor.physicsImpostor = new PhysicsImpostor(
+            floor,
+            PhysicsImpostor.BoxImpostor,
+            {
+                mass: 0,
+                restitution: 0.9
+            },
+            scene
+        );
 
         // GUI
-        var plane = MeshBuilder.CreatePlane("plane", {size: 2}, scene);
+        var plane = MeshBuilder.CreatePlane('plane', {size: 2}, scene);
         plane.parent = sphere;
         plane.position.y = 2;
 
         var advancedTexture = AdvancedDynamicTexture.CreateForMesh(plane);
 
-        var button1 = Button.CreateSimpleButton("but1", "Click Me");
+        var button1 = Button.CreateSimpleButton('but1', 'Click Me');
         button1.width = 1;
         button1.height = 0.4;
-        button1.color = "white";
+        button1.color = 'white';
         button1.fontSize = 200;
-        button1.background = "green";
+        button1.background = 'green';
         button1.onPointerUpObservable.add(function() {
-            sphere.physicsImpostor!.applyImpulse(new Vector3(0, 10, 0), sphere.getAbsolutePosition());
+            sphere.physicsImpostor!.applyImpulse(
+                new Vector3(0, 10, 0), sphere.getAbsolutePosition()
+            );
         });
         advancedTexture.addControl(button1); 
     
@@ -101,25 +119,23 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
 
     public render() {
         return (
-            <div style={{ paddingTop: '15px' }}>
-                <div className="row">
-                    <div className="col-xs-12">
-                        <Panel header={<div>bouncy <strong>BabylonJS</strong> sphere...</div>} bsStyle="success">
-                            <p><strong>click</strong> label to bounce sphere - all ES6, yay!</p>
-                        </Panel>
-                    </div>
-                </div>
-
-                <Well bsSize="small" className="text-center">
-                    <ReactBabylonJsScene
-                        onSceneMount={this.onSceneMount}
-                        visible={true}
-                        shadersRepository={'/shaders/'}
-                        width={600}
-                        height={400}
-                    />
-                </Well>
-            </div>
+            <Container>
+                <Row>
+                    <Col xs="12">
+                        <div>bouncy <strong>BabylonJS</strong> sphere...</div>
+                        <p><strong>click</strong> label to bounce sphere - all ES6, yay!</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs="12">
+                        <ReactBabylonJsScene
+                            onSceneMount={this.onSceneMount}
+                            visible={true}
+                            shadersRepository={'/shaders/'}
+                        />
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }

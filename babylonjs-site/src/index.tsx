@@ -8,7 +8,6 @@ import { routes } from './routes';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 
 ReactDOM.render(
   <Provider store={store}>
