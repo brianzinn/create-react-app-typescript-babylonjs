@@ -1,11 +1,15 @@
 {
-  "main.css": "static/css/main.59baf899.css",
-  "main.css.map": "static/css/main.59baf899.css.map",
-  "main.js": "static/js/main.6fba77e5.js",
-  "main.js.map": "static/js/main.6fba77e5.js.map",
-  "static\\media\\glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
-  "static\\media\\glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.89889688.svg",
-  "static\\media\\glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
-  "static\\media\\glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
-  "static\\media\\glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2"
+  "files": {
+    "main.css": "/create-react-app-typescript-babylonjs/static/css/main.ae2d7370.chunk.css",
+    "main.js": "/create-react-app-typescript-babylonjs/static/js/main.86381d22.chunk.js",
+    "main.js.map": "/create-react-app-typescript-babylonjs/static/js/main.86381d22.chunk.js.map",
+    "runtime~main.js": "/create-react-app-typescript-babylonjs/static/js/runtime~main.482de73b.js",
+    "runtime~main.js.map": "/create-react-app-typescript-babylonjs/static/js/runtime~main.482de73b.js.map",
+    "static/js/2.cc0fd71f.chunk.js": "/create-react-app-typescript-babylonjs/static/js/2.cc0fd71f.chunk.js",
+    "static/js/2.cc0fd71f.chunk.js.map": "/create-react-app-typescript-babylonjs/static/js/2.cc0fd71f.chunk.js.map",
+    "index.html": "/create-react-app-typescript-babylonjs/index.html",
+    "precache-manifest.22f6a48d61bd887360e05940cd02facd.js": "/create-react-app-typescript-babylonjs/precache-manifest.22f6a48d61bd887360e05940cd02facd.js",
+    "service-worker.js": "/create-react-app-typescript-babylonjs/service-worker.js",
+    "static/css/main.ae2d7370.chunk.css.map": "/create-react-app-typescript-babylonjs/static/css/main.ae2d7370.chunk.css.map"
+  }
 }
