@@ -7,6 +7,7 @@ npx create-react-app babylonjs-app --typescript
 BabylonJS was added using 'react-babylonjs'
 ```bash
 yarn add react-babylonjs
+yarn add react-reconciler
 yarn add @babylonjs/core
 yarn add @babylonjs/gui
 yarn add @babylonjs/loaders
@@ -23,3 +24,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+View [live demo](https://brianzinn.github.io/create-react-app-typescript-babylonjs/)

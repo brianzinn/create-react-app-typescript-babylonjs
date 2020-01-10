@@ -9,10 +9,10 @@
     "@babylonjs/loaders": "^4.0.3",
     "cannon": "^0.6.2",
     "react": "^16.9.0",
-    "react-babylonjs": "^2.0.1",
+    "react-babylonjs": "^2.0.2",
     "react-dom": "^16.9.0",
     "react-reconciler": "^0.22.2",
-    "react-scripts": "3.1.1",
+    "react-scripts": "3.1.2",
     "typescript": "3.6.3"
   },
   "devDependencies": {
