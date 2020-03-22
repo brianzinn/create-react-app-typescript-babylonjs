@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/create-react-app-typescript-babylonjs/static/css/main.665c7dcc.chunk.css",
-    "main.js": "/create-react-app-typescript-babylonjs/static/js/main.8b306089.chunk.js",
-    "main.js.map": "/create-react-app-typescript-babylonjs/static/js/main.8b306089.chunk.js.map",
+    "main.js": "/create-react-app-typescript-babylonjs/static/js/main.b12889b6.chunk.js",
+    "main.js.map": "/create-react-app-typescript-babylonjs/static/js/main.b12889b6.chunk.js.map",
     "runtime-main.js": "/create-react-app-typescript-babylonjs/static/js/runtime-main.771c6c72.js",
     "runtime-main.js.map": "/create-react-app-typescript-babylonjs/static/js/runtime-main.771c6c72.js.map",
-    "static/js/2.c3e3a885.chunk.js": "/create-react-app-typescript-babylonjs/static/js/2.c3e3a885.chunk.js",
-    "static/js/2.c3e3a885.chunk.js.map": "/create-react-app-typescript-babylonjs/static/js/2.c3e3a885.chunk.js.map",
+    "static/js/2.1c9915b8.chunk.js": "/create-react-app-typescript-babylonjs/static/js/2.1c9915b8.chunk.js",
+    "static/js/2.1c9915b8.chunk.js.map": "/create-react-app-typescript-babylonjs/static/js/2.1c9915b8.chunk.js.map",
     "index.html": "/create-react-app-typescript-babylonjs/index.html",
-    "precache-manifest.08cee56efdbc912972d44ce436185b85.js": "/create-react-app-typescript-babylonjs/precache-manifest.08cee56efdbc912972d44ce436185b85.js",
+    "precache-manifest.3b0ea0b648525431c9a483b968735dcb.js": "/create-react-app-typescript-babylonjs/precache-manifest.3b0ea0b648525431c9a483b968735dcb.js",
     "service-worker.js": "/create-react-app-typescript-babylonjs/service-worker.js",
     "static/css/main.665c7dcc.chunk.css.map": "/create-react-app-typescript-babylonjs/static/css/main.665c7dcc.chunk.css.map"
   }
