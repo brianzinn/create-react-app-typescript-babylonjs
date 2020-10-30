@@ -1,27 +1,30 @@
 {
-  "name": "babylonjs-site",
+  "name": "create-react-app-typescript-babylonjs",
   "homepage": "https://brianzinn.github.io/create-react-app-typescript-babylonjs",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babylonjs/core": "^4.1.0",
-    "@babylonjs/gui": "^4.1.0",
-    "@babylonjs/loaders": "^4.1.0",
+    "@babylonjs/core": "^4.2.0-beta.20",
+    "@babylonjs/gui": "^4.2.0-beta.20",
+    "@babylonjs/loaders": "^4.2.0-beta.20",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "cannon": "^0.6.2",
-    "react": "^16.13.1",
-    "react-babylonjs": "2.0.6",
-    "react-dom": "^16.13.1",
-    "react-reconciler": "^0.25.1",
-    "react-scripts": "3.1.2",
-    "typescript": "3.6.3"
+    "react": "^17.0.1",
+    "react-babylonjs": "^2.2.14",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.0",
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4"
   },
   "devDependencies": {
-    "@types/cannon": "^0.1.4",
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.5",
-    "@types/react": "^16.9.25",
-    "@types/react-dom": "^16.9.5",
-    "gh-pages": "^2.1.1"
+    "@types/cannon": "^0.1.5",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "gh-pages": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,7 +35,10 @@
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

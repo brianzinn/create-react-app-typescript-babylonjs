@@ -1,13 +1,12 @@
-This project was bootstrapped with Create React App (CRA) v3 site and then BabylonJS was added.
+This project was bootstrapped with Create React App (CRA) v4 and then `babylonjs-react` was added.
 For TypeScript
 ```bash
-npx create-react-app babylonjs-app --typescript
+npx create-react-app your-babylonjs-app --template typescript
 ```
 
-BabylonJS was added using 'react-babylonjs'
+Add babylonjs dependencies:
 ```bash
 yarn add react-babylonjs
-yarn add react-reconciler
 yarn add @babylonjs/core
 yarn add @babylonjs/gui
 yarn add @babylonjs/loaders
