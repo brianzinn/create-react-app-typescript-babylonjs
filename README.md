@@ -9,6 +9,7 @@ Add babylonjs dependencies:
 yarn add react-babylonjs
 yarn add @babylonjs/core
 yarn add @babylonjs/gui
+# loaders are optional
 yarn add @babylonjs/loaders
 ```
 
