@@ -1,9 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
+
 import "@babylonjs/core/Physics/physicsEngineComponent"  // side-effect adds scene.enablePhysics function
-import { Vector3, PhysicsImpostor, Mesh, Nullable, Color3, FresnelParameters, Texture } from '@babylonjs/core';
+
 import { CannonJSPlugin } from '@babylonjs/core/Physics/Plugins'
+import { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector';
+import { Nullable } from '@babylonjs/core/types';
+import { Mesh } from '@babylonjs/core/Meshes/mesh';
+import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor';
+import { Color3 } from '@babylonjs/core/Maths/math.color';
+import { FresnelParameters } from '@babylonjs/core/Materials/fresnelParameters';
+import { Texture } from '@babylonjs/core/Materials/Textures/texture';
+
 import { Scene, Engine } from 'react-babylonjs';
 import './App.css';
+
 import * as CANNON from 'cannon';
 window.CANNON = CANNON;
 
@@ -18,8 +29,25 @@ const onButtonClicked = () => {
 
 const App: React.FC = () => {
   const sphereRef = useCallback(node => {
-    sphere = node.hostInstance;
+    sphere = node;
   }, []);
+
+  const [fontsReady, setFontsReady] = useState(false);
+  const adtRef = useRef<AdvancedDynamicTexture | null>(null);
+  const faLoaded = useRef(false);
+  if (document.fonts.check("16px FontAwesome") === false) {
+    document.fonts.load("16px FontAwesome").then(() => {
+      if (faLoaded.current !== true && adtRef.current !== null) {
+        faLoaded.current = true;
+
+        setFontsReady(true);
+        adtRef.current!.markAsDirty();
+      }
+    });
+  } else if (faLoaded.current !== true) {
+    faLoaded.current = true;
+    setFontsReady(true);
+  }
 
   return (
     <div className="App">
@@ -37,7 +65,7 @@ const App: React.FC = () => {
               <shadowGenerator mapSize={1024} useBlurExponentialShadowMap={true} blurKernel={32} darkness={0.8}
                 shadowCasters={["sphere1", "dialog"]} forceBackFacesOnly={true} depthScale={100} />
             </directionalLight>
-            <sphere ref={sphereRef} name="sphere1" diameter={2} segments={16} position={new Vector3(0, 2.5, 0)}>
+            <sphere ref={sphereRef} name="sphere1" diameter={2} segments={16} position={new Vector3(0, 1.5, 0)}>
               <physicsImpostor type={PhysicsImpostor.SphereImpostor} _options={{ mass: 1, restitution: 0.9 }} />
               <standardMaterial name='material1' specularPower={16}
                 diffuseColor={Color3.Black()}
@@ -53,6 +81,7 @@ const App: React.FC = () => {
               <plane name="dialog" size={2} position={new Vector3(0, 1.5, 0)} sideOrientation={Mesh.BACKSIDE}>
                 <advancedDynamicTexture
                     name="dialogTexture"
+                    ref={adtRef}
                     height={1024} width={1024}
                     createForParentMesh={true}
                     hasAlpha={true}
@@ -62,14 +91,14 @@ const App: React.FC = () => {
                     <rectangle name="rect-1" height={0.5} width={1} thickness={12} cornerRadius={12}>
                         <rectangle>
                             <babylon-button name="close-icon" background="green" onPointerDownObservable={onButtonClicked} >
-                            <textBlock text={'\uf00d click me'} fontFamily="FontAwesome" fontStyle="bold" fontSize={200} color="white" />
+                              <textBlock text={`${fontsReady ? '\uf00d' : 'X'} click me`} fontFamily='FontAwesome' fontStyle="bold" fontSize={200} color="white" />
                             </babylon-button>
                         </rectangle>
                     </rectangle>
                   </advancedDynamicTexture>
               </plane>
             </sphere>
-            
+
             <ground name="ground1" width={10} height={10} subdivisions={2} receiveShadows={true}>
               <physicsImpostor type={PhysicsImpostor.BoxImpostor} _options={{ mass: 0, restitution: 0.9 }} />
             </ground>
