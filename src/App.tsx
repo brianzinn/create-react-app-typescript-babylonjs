@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import "@babylonjs/core/Physics/physicsEngineComponent"  // side-effect adds scene.enablePhysics function
 
@@ -19,18 +19,19 @@ import * as CANNON from 'cannon';
 window.CANNON = CANNON;
 
 const gravityVector = new Vector3(0, -9.81, 0);
-let sphere: Nullable<Mesh> = null;
-
-const onButtonClicked = () => {
-  if (sphere !== null) {
-    sphere.physicsImpostor!.applyImpulse(Vector3.Up().scale(10), sphere.getAbsolutePosition())
-  }
-}
 
 const App: React.FC = () => {
-  const sphereRef = useCallback(node => {
-    sphere = node;
-  }, []);
+
+  let sphereRef = useRef<Nullable<Mesh>>();
+
+  const onButtonClicked = () => {
+    if (sphereRef.current) {
+      sphereRef.current.physicsImpostor!.applyImpulse(
+        Vector3.Up().scale(10),
+        sphereRef.current.getAbsolutePosition()
+      );
+    }
+  };
 
   const [fontsReady, setFontsReady] = useState(false);
   const adtRef = useRef<AdvancedDynamicTexture | null>(null);
