@@ -23,10 +23,15 @@
     "@types/node": "^16.11.59",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
+    "eslint-plugin-react": "^7.31.10",
     "gh-pages": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "eslint \"src/**/*.ts\" -c .eslintrc.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
